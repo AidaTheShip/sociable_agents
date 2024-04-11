@@ -17,4 +17,42 @@ Here are the archetypes that we will attempt to fix through our simulation.
 
 There are two questions that we will explore here: Given our architecture, can we: a) end up in such a structure and b) if we do, escape it through reinforcement learning? What changed?
 
+## The Environments/Scenarios
+Eventually, we want the environments to be self-makeable, meaning that every person can make their own environment as they'd like to see how agents would perform with different characteristics.
+
+### Tragedy of Commons
+This will be one of the system archetypes we will explore.
+
+
+### Fixes That Fail
+
+## Characteristics of Agents
+This is about modeling the characteristics of agents. 
+
+We are looking at the different personality tests to synthesize the personality traits as well as some other sources that explain the interlink between traits and behaviors. 
+Find one [here][https://opentextbc.ca/introductiontopsychology/chapter/11-1-personality-and-behavior-approaches-and-measurement/#:~:text=Personality%20traits%20such%20as%20introversion,report%20about%20their%20own%20characteristics.].
+
 ## The Science behind Networks
+Networks and Graphs' goals is to understand complex systems through mapping the interactions between components.
+> A network is a catalog of a system's components often called nodes or vertices and the direct interactions between them, called link or edges. - Networkscience Book (Barabasi)
+In our networks, we'll have two main parameters: 
+- Number of nodes (N) (Graph Theory: Vertex) representing the # of components in the system. We call this the size of the network.
+- Number of links (L) (Graph Theory: Edge) represent the total number of interactions between the nodes. These can be *directed* or *undirected*. 
+
+For this project, we are interested in linking individuals (agents) with each other; a couple of specific examples include: organization/professional network, friendship network, sexual network, acquaintance network, etc.
+
+
+## Flask Server
+
+To run your flask application, run the following commands in the terminal: 
+```bash
+export FLASK_APP=file_name
+```
+Then: 
+```bash
+export FLASK_ENV=development
+```
+and finally to run: 
+```bash
+flask run 
+```
