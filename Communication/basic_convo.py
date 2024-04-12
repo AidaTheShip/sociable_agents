@@ -1,8 +1,8 @@
-from agent_creation import Agent, generate_convo_context
+from agentdesign import Agent
 from autogen import GroupChat, GroupChatManager
 import numpy as np
 import os
-from LLM_setup import open_ai_key
+from api_keys import open_ai_key
 os.environ['OPENAI_API_KEY'] = open_ai_key
 
 # ---------- SETTING VARIABLES ---------- 

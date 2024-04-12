@@ -24,6 +24,7 @@ class Agent:
         self.movie_preferences = self.create_movie_preferences()
         # self.characteristics = self.create_characteristics() # Puttins this on pause for a second
         self.background = self.prompt_creation()
+        self.well_being = self.well_being() # encoding the well-being
         self.agent = ConversableAgent(
             name,
             system_message=self.background,
@@ -47,6 +48,14 @@ class Agent:
         description = specifier_prompt.choices[0].message.content
         return description
         
+    def well_being(self):
+        self.social_wellbeing = 0 # this will be a function based on certain characteristics of the agent + network
+        self.personal_wellbeing = 0 # this will be a function based on certain characteristics of the agent
+        self.purpose_wellbeing = 0 # this will be a function based on the purpose/role the agent feels they have
+        
+    def social_network(self): 
+        pass
+    
     def create_movie_preferences(self, movies=movies): 
         return random.sample(movies, len(movies))
     
@@ -61,6 +70,7 @@ class Agent:
             "Openness": float, 
             "Neuroticism": float
         }
+        
         
         # Mapping those onto the actual characteristics for an agent. How would you do that?
         # You could include in the prompt. How would you map it onto the prompt though? How do you make their behavior different through these characteristics?

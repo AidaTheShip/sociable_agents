@@ -32,6 +32,14 @@ This is about modeling the characteristics of agents.
 We are looking at the different personality tests to synthesize the personality traits as well as some other sources that explain the interlink between traits and behaviors. 
 Find one [here][https://opentextbc.ca/introductiontopsychology/chapter/11-1-personality-and-behavior-approaches-and-measurement/#:~:text=Personality%20traits%20such%20as%20introversion,report%20about%20their%20own%20characteristics.].
 
+## Well-Being 
+For simplicity, we are going to encode the well-being of each agent as a vector, giving us a metric for their emotional well-being. This will generally be about how well they are feeling about their **social circumstances**, **self/personal circumstances**, and **situational/future circumstances/purpose**. (the latter one I'm not entirely sure yet)
+
+### Social Well-being
+Social well-being will be encoded mathematically based on the characteristics of the agent. This means that having a large network of friends and high-frequency interactions with them will generally make agents with higher extroversion more content. On the other hand if you have an agent high on introversion, too much interaction with their network compared to time spend alone, will make them less content. 
+
+Additionally, we will also encode the level of "deepness" as a weight between the agents' relationships with each other. Depth of relationships generally increases the well-being of agents. 
+
 ## The Science behind Networks
 Networks and Graphs' goals is to understand complex systems through mapping the interactions between components.
 > A network is a catalog of a system's components often called nodes or vertices and the direct interactions between them, called link or edges. - Networkscience Book (Barabasi)
@@ -39,7 +47,7 @@ In our networks, we'll have two main parameters:
 - Number of nodes (N) (Graph Theory: Vertex) representing the # of components in the system. We call this the size of the network.
 - Number of links (L) (Graph Theory: Edge) represent the total number of interactions between the nodes. These can be *directed* or *undirected*. 
 
-For this project, we are interested in linking individuals (agents) with each other; a couple of specific examples include: organization/professional network, friendship network, sexual network, acquaintance network, etc.
+For this project, we are interested in linking individuals (agents) with each other; a couple of specific examples include: organization/professional network, friendship network, sexual network, acquaintance network, etc.. Social networks will therefore be increasingly important.
 
 
 ## Flask Server
