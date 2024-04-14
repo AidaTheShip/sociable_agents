@@ -13,8 +13,10 @@ def agent_creation(agent_number, agents = {}):
     # print(content_names)
     # Based on the number of agents we want, we can select random names
     names = np.array([random.choice(content_names) for _ in range(agent_number)])
+    print(type(names))
     for name in names: 
         agents[name] = Agent(name)
+        agents[name].social_network(names)
     return agents
 
-# agent_creation() # => now we have all the agents stored in our dictionary and can do what we want with them 
+agent_creation() # => now we have all the agents stored in our dictionary and can do what we want with them 

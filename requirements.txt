@@ -2,3 +2,8 @@ flask
 numpy
 pyvis
 autogen
+openai 
+seaborn
+networkx
+pandas
+matplotlib.pyplot

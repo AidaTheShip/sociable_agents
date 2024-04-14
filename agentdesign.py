@@ -3,7 +3,7 @@ import random
 import numpy as np
 from openai import OpenAI
 from autogen import ConversableAgent
-
+from Networks.network import SocialNetwork
 from api_keys import open_ai_key
 os.environ['OPENAI_API_KEY'] = open_ai_key
 
@@ -53,11 +53,9 @@ class Agent:
         self.personal_wellbeing = 0 # this will be a function based on certain characteristics of the agent
         self.purpose_wellbeing = 0 # this will be a function based on the purpose/role the agent feels they have
         
-    def social_network(self): 
-        pass
-    
-    def create_movie_preferences(self, movies=movies): 
-        return random.sample(movies, len(movies))
+    # have to manually call this to instantiate the social network of the agent.
+    def social_network(self, agents): 
+        self.social_network = SocialNetwork(agents)
     
     def characteristics(self):
         # What is the space of characteristics that each agent can have?
