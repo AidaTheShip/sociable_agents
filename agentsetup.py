@@ -3,7 +3,6 @@ import random
 from agentdesign import Agent
 agent_number = 10
 
-    
 
 # ----------------------- CREATING AGENTS ---------------------------
 def agent_creation(agent_number, agents = {}):

@@ -15,12 +15,12 @@ global description_limit
 description_limit = 50
 
 # BASIC VARIABLES (we'll eventually put these into)
-movies = ["Avatar", "Avengers", "Titanic", "Jurassic World", "Star Wars"]
+# movies = ["Avatar", "Avengers", "Titanic", "Jurassic World", "Star Wars"]
 
+## Intiializing the agent class
 class Agent: 
-    def __init__(self, name:str, movies=movies):
+    def __init__(self, name:str):
         self.name = name
-        self.movies = movies
         self.movie_preferences = self.create_movie_preferences()
         # self.characteristics = self.create_characteristics() # Puttins this on pause for a second
         self.background = self.prompt_creation()
