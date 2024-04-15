@@ -1,6 +1,7 @@
 import os
 import random
 import numpy as np
+import pandas as pd
 from openai import OpenAI
 from autogen import ConversableAgent
 from Networks.network import SocialNetwork
@@ -14,12 +15,16 @@ word_limit = 100
 global description_limit
 description_limit = 50
 
-# BASIC VARIABLES (we'll eventually put these into)
-# movies = ["Avatar", "Avengers", "Titanic", "Jurassic World", "Star Wars"]
+global columns 
+columns = ['Name', 'Characteristics'] # What we want to store in csv file.
+db_directory = 'AgentDB'
+
+if not os.path.exists(db_directory): # this is for making a new data base directory
+    os.makedirs(db_directory)
 
 ## Intiializing the agent class
 class Agent: 
-    def __init__(self, name:str):
+    def __init__(self, name:str, directory=db_directory):
         self.name = name
         self.movie_preferences = self.create_movie_preferences()
         # self.characteristics = self.create_characteristics() # Puttins this on pause for a second
@@ -32,7 +37,10 @@ class Agent:
             human_input_mode="NEVER",  # Never ask for human input.
 )
         self.characteristics = self.characteristics()
-        
+        self.database = pd.DataFrame(columns=columns)
+        file_path = os.path.join(directory, 'agent_data.csv')
+        self.database.to_csv(file_path, index=False)
+                
     def prompt_creation(self):   
         specifier_prompt = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -46,6 +54,7 @@ class Agent:
     )
     
         description = specifier_prompt.choices[0].message.content
+        
         return description
         
     def well_being(self):
@@ -56,7 +65,9 @@ class Agent:
     # have to manually call this to instantiate the social network of the agent.
     def social_network(self, agents): 
         self.social_network = SocialNetwork(agents)
+        
     
+    # Challenge: How are you going to encode these characteristics? How are you going to map onto behavior?
     def characteristics(self):
         # What is the space of characteristics that each agent can have?
         traits = {
@@ -76,22 +87,22 @@ class Agent:
         
         return traits
 
-def generate_convo_context(name, preference, conversation_topic, characteristics=None): 
-    agent_description_system_message = "You "
-    if characteristics is None: 
-        pass
+# def generate_convo_context(name, preference, conversation_topic, characteristics=None): 
+#     agent_description_system_message = "You "
+#     if characteristics is None: 
+#         pass
     
-    specifier_prompt = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+#     specifier_prompt = client.chat.completions.create(
+#         model="gpt-3.5-turbo",
         
-        messages=[
-            {"role": "system", "content": f"{agent_description_system_message}"},
-            {"role": "user", "content": f"""Here is what you talk about: {conversation_topic}. 
-                            Please reply with a description of {name} in {word_limit} words or less.
-                            {name} has the movie preferences in this order: {preference}. These are the only movies in discussion.
-                            Do not add anything else."""}
-            ]
-    )
+#         messages=[
+#             {"role": "system", "content": f"{agent_description_system_message}"},
+#             {"role": "user", "content": f"""Here is what you talk about: {conversation_topic}. 
+#                             Please reply with a description of {name} in {word_limit} words or less.
+#                             {name} has the movie preferences in this order: {preference}. These are the only movies in discussion.
+#                             Do not add anything else."""}
+#             ]
+#     )
     
-    agent_description = specifier_prompt.choices[0].message.content
-    return agent_description
+#     agent_description = specifier_prompt.choices[0].message.content
+#     return agent_description
