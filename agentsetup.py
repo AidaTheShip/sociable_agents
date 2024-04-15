@@ -5,6 +5,7 @@ agent_number = 10
 
 
 # ----------------------- CREATING AGENTS ---------------------------
+
 def agent_creation(agent_number, agents = {}):
 # For loop for instantiating x people
     with open('Agent_Information/information.txt', 'r') as f:
@@ -16,7 +17,7 @@ def agent_creation(agent_number, agents = {}):
     print(type(names))
     for name in names: 
         agents[name] = Agent(name)
-        agents[name].social_network(names)
+        agents[name].social_network(names) # Initializing the social network of agents by passing in all the agents that are participating in the simulation
     return agents
 
-agent_creation() # => now we have all the agents stored in our dictionary and can do what we want with them 
+# agent_creation() # => now we have all the agents stored in our dictionary and can do what we want with them 
