@@ -53,10 +53,6 @@ class SocialNetwork():
         nt.show('network.html')
 
         
-        
-        
-        
-
 # Testing class functionality
 test = SocialNetwork(['a', 'b', 'c'], [])
 print(test.network.graph) # yay, it works!

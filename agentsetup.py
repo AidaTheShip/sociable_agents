@@ -19,5 +19,3 @@ def agent_creation(agent_number, agents = {}):
         agents[name] = Agent(name)
         agents[name].social_network(names) # Initializing the social network of agents by passing in all the agents that are participating in the simulation
     return agents
-
-# agent_creation() # => now we have all the agents stored in our dictionary and can do what we want with them 

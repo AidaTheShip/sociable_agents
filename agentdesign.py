@@ -29,7 +29,7 @@ class Agent:
         self.movie_preferences = self.create_movie_preferences()
         # self.characteristics = self.create_characteristics() # Puttins this on pause for a second
         self.background = self.prompt_creation()
-        self.well_being = self.well_being() # encoding the well-being
+        self.well_being = self.well_bfeing() # encoding the well-being
         self.agent = ConversableAgent(
             name,
             system_message=self.background,
@@ -70,22 +70,24 @@ class Agent:
     # Challenge: How are you going to encode these characteristics? How are you going to map onto behavior?
     def characteristics(self):
         # What is the space of characteristics that each agent can have?
-        traits = {
-            "Introversion": float, 
-            "Friendliness": float, 
-            "Conscientousness": float,
-            "Honesty": float, 
-            "Helpfulness": float, 
-            "Openness": float, 
-            "Neuroticism": float
-        }
-        
+        # traits = {
+        #     "Introversion": float, 
+        #     "Friendliness": float, 
+        #     "Conscientousness": float,
+        #     "Honesty": float, 
+        #     "Helpfulness": float, 
+        #     "Openness": float, 
+        #     "Neuroticism": float
+        # }
+        num_of_characteristics = 7
+        characteristics_map = np.random.rand(7,)
+        self.characteristics = characteristics_map
         
         # Mapping those onto the actual characteristics for an agent. How would you do that?
         # You could include in the prompt. How would you map it onto the prompt though? How do you make their behavior different through these characteristics?
         # TO-DO
         
-        return traits
+        
 
 # def generate_convo_context(name, preference, conversation_topic, characteristics=None): 
 #     agent_description_system_message = "You "

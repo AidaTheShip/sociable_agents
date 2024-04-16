@@ -7,3 +7,6 @@ seaborn
 networkx
 pandas
 matplotlib.pyplot
+scikit-learn
+keras
+tensorflow

@@ -3,6 +3,8 @@ import openai
 from openai import Client
 import networkx as nx
 import os
+from api_keys import open_ai_key
+os.environ['OPENAI_API_KEY'] = open_ai_key
 
 """
 This is creating a novel pipelines as to how we can encode systems in python.
@@ -21,14 +23,34 @@ class System():
         self.connections = connections
         self.purpose = purpose # this is given here.
         
-    def initialize_network(self): 
+    def initialize_network(self): # mapping the connection between the elements
         self.graph = nx.Graph()
         for element in self.elements: 
             self.graph.add_node(element)
         for connections in self.connections:
             src, dest = connections
             self.graph.add_edge(src, dest)
+    # think about this a litlte bit more. 
+    def purpose_creation(self, simplistic_prompt, client = client):
+        system_message = ""
+        specifier_prompt = client.chat.completions.create(
+            model="gpt-3.5-turbo",
             
+            messages=[
+                {"role": "system", "content": f"{system_message}"},
+                {"role": "user", "content": f"""These are the elements of the system: {self.elements}. 
+                                These are the connections between the elements: {self.connections}.
+                                This is the purpose of the system: {self.purpose}
+                                You are modeling a system. In your system you are supposed to draw the connections between your purpose, elments, and interactions. 
+                                Particularly, this is what your syste is 
+                                """}
+                ]
+        )
+        
+        agent_description = specifier_prompt.choices[0].message.content
+        return agent_description
+        
+    
     
     def visualizing(self): 
         pass
@@ -39,24 +61,3 @@ class System():
         
         elif self.purpose == "System": # this is for "normal" system simulations
             pass
-    
-# # This will be relevant later. 
-# def generate_convo_context(name, preference, conversation_topic, characteristics=None): 
-#     agent_description_system_message = "You "
-#     if characteristics is None: 
-#         pass
-    
-#     specifier_prompt = client.chat.completions.create(
-#         model="gpt-3.5-turbo",
-        
-#         messages=[
-#             {"role": "system", "content": f"{agent_description_system_message}"},
-#             {"role": "user", "content": f"""Here is what you talk about: {conversation_topic}. 
-#                             Please reply with a description of {name} in {word_limit} words or less.
-#                             {name} has the movie preferences in this order: {preference}. These are the only movies in discussion.
-#                             Do not add anything else."""}
-#             ]
-#     )
-    
-#     agent_description = specifier_prompt.choices[0].message.content
-#     return agent_description

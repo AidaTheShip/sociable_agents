@@ -64,3 +64,11 @@ and finally to run:
 ```bash
 flask run 
 ```
+
+## The simplest prototype
+We are going to initiate N people. 
+The actions the people can take is either a) talk to others or not talk to others. 
+After each step, each agents gets an interaction score that will influence their social network + well-being. 
+Based on the score it got, it will learn to optimize for well-being. 
+
+---- This is not the final goal of the project but it is a first, tangible, and deliverable result. -----
