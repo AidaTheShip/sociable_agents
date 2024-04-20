@@ -72,3 +72,27 @@ After each step, each agents gets an interaction score that will influence their
 Based on the score it got, it will learn to optimize for well-being. 
 
 ---- This is not the final goal of the project but it is a first, tangible, and deliverable result. -----
+
+Implementation Steps to take: 
+1. Initialize Basic Environment with Action space. 
+2. Create mapping between behavior and characteristics/needs. Pair social network to characteristics.
+3. Run reinforcement learning algorithm. 
+
+
+## Reinforcement Learning
+We are going to start with a simpler version of the reinforcement learning algorithm, in which teh agents are not going to communicate through LLMs. 
+
+
+
+### Policy Network 
+There are different types of reinforcement learning. In our particular case, we are going to use a Policy based approach. This means that the policy determines the behavior of the agent. The agent learns the policy or more so learns the behavior that it is supposed to enact. It is a strategy that the agent follows to decide its actions at each state of the environment. Our neural network approximates this policy function. It maps observed states of the environment to actions that the agent should take. The goal is to learn a policy that maximizes the cumulative reward the agent receives over time.
+
+How does it work? 
+- Input: State of the environment, e.g. through a vector representing the current state of agent.
+- Output: Direct action values, which can be real numbers. 
+- Layers: several layers of neurons that help in extracting features and nonlinear relationships from the state inputs
+
+During our reinforcement learning, we are going to train the policy network. 
+
+So how do you train the policy network? 
+These methods directly optimize the policy by calculating the gradient of the expected return (cumulative reward) with respect to the network parameters and then updating the parameters in the direction that maximizes the return.

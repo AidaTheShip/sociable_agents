@@ -8,6 +8,7 @@ class SocialNetwork():
     def __init__(self, agents: list[str], curr_network:np.matrix=None): 
         self.participants = agents # this stores all the agents that are in the simulation
         self.initializing_network(curr_network)
+        self.vis = 0
     
     def update_connection(self, connection:tuple, strength:float=None):
         # Pyvis is mainly used for visualization but we will work around this by continuously updating the networkx data structure that is underlying
@@ -24,7 +25,6 @@ class SocialNetwork():
         # This function initializes the nodes of the network + adjacency matrix 
         dimension = len(self.participants)
         # this establishes the connections if there are any
-        self.adjacency_matrix = np.zeros(shape=(dimension, dimension))
         # if adjacency_matrix is None or []:
         #     print("Its none")
         #     self.adjacency_matrix = np.zeros(shape=(dimension, dimension))
@@ -35,24 +35,45 @@ class SocialNetwork():
         net = nx.Graph()
         # Adding the nodes into the network 
         for i in range(dimension):
-            net.add_node(i, label=self.agents[i]) # note that you can also add a positon of the node here and some other properties; might be interesting
+            net.add_node(i, label=self.participants[i]) # note that you can also add a positon of the node here and some other properties; might be interesting
         
         # Adding the connections
         # rows, columns = self.adjacency_matrix.shape
         rows, columns = dimension, dimension
         for i in range(rows): 
             for j in range(columns):
-                net.add_edge(i, j, weight=self.adjacency_matrix[i][j])
-        
+                if i != j: # making sure that there is no self-relationship in here. we might change this later. 
+                    net.add_edge(self.participants[i], self.participants[j], weight=0) # setting the ninital weights to zero 
+                    
         self.network = net
     
+    def create_adjacency_matrix(self):    
+        self.adjacency_matrix = np.matrix(nx.adjacency_matrix(self.network).todense())
         
     def visualize(self):
         nt = Network(notebook=True)
-        nt.from_nx(self.G)
+        self.vis += 1
+        nt.from_nx(self.network)
         nt.show('network.html')
+    
+    def reset(self): 
+        self.network = self.initializing_network()
 
         
 # Testing class functionality
-test = SocialNetwork(['a', 'b', 'c'], [])
-print(test.network.graph) # yay, it works!
+
+# test = SocialNetwork(['a', 'b', 'c'])
+# print(test.network.graph) # yay, it works!
+# # a = test.network.edges('a')[0]['weight']
+# for edge in test.network.edges('a'):
+#     u, v = edge
+#     information = test.network.get_edge_data(u, v)
+#     print(information['weight'])
+    
+    # print(edge['weight'])
+# print(test.network.edges('a'))
+# print(test.network.edges('1'))
+# test.visualize()
+# print(test.network.nodes)
+# print(test.network.nodes['b'])
+# test.reset()
