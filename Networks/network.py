@@ -19,7 +19,10 @@ class SocialNetwork():
         # What remains is just updating the weight.
         self.network[src][dir]['weight'] = strength
 
-    
+    def remove_connection(self, connection:tuple):
+        src, dir = connection
+        self.network[src][dir]['weight'] = 0
+        
     def initializing_network(self, adjacency_matrix:np.matrix=None):
         # Connections should include: source, target; initial weights should include the initial weights
         # This function initializes the nodes of the network + adjacency matrix 
