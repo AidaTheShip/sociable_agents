@@ -65,11 +65,11 @@ class SocialNetwork():
         
 # Testing class functionality
 
-test = SocialNetwork(['a', 'b', 'c'])
-print(test.network.graph) # yay, it works!
-# a = test.network.edges('a')[0]['weight']
-for u,v in test.network.edges('a'):
-    print(u,v, test.network.get_edge_data(u, v)['weight'])
+# test = SocialNetwork(['a', 'b', 'c'])
+# print(test.network.graph) # yay, it works!
+# # a = test.network.edges('a')[0]['weight']
+# for u,v in test.network.edges('a'):
+#     print(u,v, test.network.get_edge_data(u, v)['weight'])
     
     # print(edge['weight'])
 # print(test.network.edges('a'))

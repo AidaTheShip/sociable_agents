@@ -20,6 +20,7 @@ if not os.path.exists(db_directory): # this is for making a new data base direct
 class Agent:
     def __init__(self, name:str, agents, directory=db_directory):
         self.name = name
+        # self.participants = agents  # not sure if i necessarily need this
         self.social_network = SocialNetwork(agents)
         self.create_characteristics()
         # self.well_being = self.update_wellbeing() # not sure if this is necessary given that I already do this in the get_state function
@@ -36,18 +37,19 @@ class Agent:
         # storing the actions as training data.
         # [...]
         self.perform_action(final_action)
-        return final_action
+        # return final_action
         
     def update_wellbeing(self):
         self.degree = 0
         self.total_weight = 0
         for u,v in self.social_network.network.edges(f'{self.name}'):
-            information = self.social_network.network.get_edge_data(u,v)
-            self.total_weight += information['weight']
+            self.information = self.social_network.network.get_edge_data(u,v)
+            self.total_weight += self.information['weight']
             self.degree += 1
         
         self.sociality = self.total_weight / self.degree
-        self.well_being = (1-self.introversion) * self.sociality + self.introversion * self.degree
+        # how would you define well-being? In this particular case, we are trying to model behavior, aren't we?
+        self.well_being = (1-self.introversion) * self.sociality + self.introversion * self.degree  # This is how we are defining well-being. So in a sense, we are training this on maximizing this function.
         return self.well_being
     
     def get_state(self):
@@ -56,16 +58,22 @@ class Agent:
         self.state = state = np.array([self.characteristics, self.total_weight, self.degree, self.well_being])
         return state
     
-    def update_policy(self, reward, next_state):
-        self.policy_net.update(self.get_state(), self.decide_action(), reward, next_state)
-        
+
     def perform_action(self, action):
         # performing the action 
-        if action == 0: 
+        # picking a random interaction? Picking a random interaction model 
+        if action == 0:  # this is talking
+            # for now what we are going to do is, we're going to have the weight of a random relationship change, randomly based on whether the conversation went well. 
+            interaction_partner = random.choice(self.information)
+            quality_conversation = random.uniform(0,1)
+            self.social_network.update_connection(interaction_partner,quality_conversation)
+            
+        elif action == 1 : # this is not interacting.
             pass
-        elif action == 1 :
-            pass 
-        pass
+        
+        old_state = self.state
+        next_state = self.get_state()
+        self.policy_net.update(old_state, self.action, self.reward, next_state)
     
     def reward(self):
         return self.update_wellbeing()
@@ -89,7 +97,7 @@ def agent_creation(agent_number, agents={}):
         
     return agents # this is returning a dictionary
 
-agents = agent_creation(5)
+# agents = agent_creation(5) # this is solely for testing purposese
 
 # for _, key in enumerate(agents):
 #     print(agents[key].social_network.visualize())
