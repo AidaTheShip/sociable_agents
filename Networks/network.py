@@ -34,8 +34,8 @@ class SocialNetwork():
             
         net = nx.Graph()
         # Adding the nodes into the network 
-        for i in range(dimension):
-            net.add_node(i, label=self.participants[i]) # note that you can also add a positon of the node here and some other properties; might be interesting
+        # for i in range(dimension):
+        #     net.add_node(i, label=self.participants[i]) # note that you can also add a positon of the node here and some other properties; might be interesting
         
         # Adding the connections
         # rows, columns = self.adjacency_matrix.shape
@@ -62,13 +62,11 @@ class SocialNetwork():
         
 # Testing class functionality
 
-# test = SocialNetwork(['a', 'b', 'c'])
-# print(test.network.graph) # yay, it works!
-# # a = test.network.edges('a')[0]['weight']
-# for edge in test.network.edges('a'):
-#     u, v = edge
-#     information = test.network.get_edge_data(u, v)
-#     print(information['weight'])
+test = SocialNetwork(['a', 'b', 'c'])
+print(test.network.graph) # yay, it works!
+# a = test.network.edges('a')[0]['weight']
+for u,v in test.network.edges('a'):
+    print(u,v, test.network.get_edge_data(u, v)['weight'])
     
     # print(edge['weight'])
 # print(test.network.edges('a'))

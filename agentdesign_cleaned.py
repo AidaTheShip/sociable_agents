@@ -20,11 +20,22 @@ class Agent:
     def __init__(self, name:str, agents, directory=db_directory):
         self.name = name
         self.social_network = SocialNetwork(agents)
+        self.well_being = self.create_characteristics()
         
     def create_characteristics(self):
-        pass
+        self.introversion = random.uniform(0,1) # uniformly giving each agent the attribute of introversion or extroversion on a spectrum vrom 0 to 1
+        self.degree = 0
+        self.total_weight = 0
+        for u,v in self.social_network.network.edges(f'{self.name}'):
+            information = self.social_network.network.get_edge_data(u,v)
+            self.total_weight += information['weight']
+            self.degree += 1
+        
+        self.sociality = self.total_weight / self.degree
+        self.well_being = (1-self.introversion) * self.sociality + self.introversion * self.degree
     
     
+
     
 # Setting up the agents
 def agent_creation(agent_number, agents={}):
@@ -40,6 +51,6 @@ def agent_creation(agent_number, agents={}):
 
 agents = agent_creation(5)
 
-for _, key in enumerate(agents):
-    print(agents[key].social_network.visualize())
+# for _, key in enumerate(agents):
+#     print(agents[key].social_network.visualize())
 
