@@ -22,16 +22,21 @@ class Agent:
         self.name = name
         self.social_network = SocialNetwork(agents)
         self.create_characteristics()
-        self.well_being = self.update_wellbeing()
-        # Neural network model to decide actions
-        self.initial_state = 0
-        self.policy_net = PolicyNetwork(self.initial_state) # creating a policy network here.
+        # self.well_being = self.update_wellbeing() # not sure if this is necessary given that I already do this in the get_state function
+        # Neural network model to decide action
+        self.initial_state = self.get_state()
+        self.action_dim = 2 # you talk or you don't talk
+        self.policy_net = PolicyNetwork(self.initial_state.shape, self.action_dim) # creating a policy network here.
     
     def decide_action(self):
         state = self.get_state()
-        action = self.policy_net.predict(state) # giving you back the action that the agent should perform
-        
-        return action
+        actions = self.policy_net.predict(state) # giving you back the action that the agent should perform
+        final_action = np.random.choice(self.action_dim, p=actions)
+        final_action = np.where(actions == final_action)[0][0]
+        # storing the actions as training data.
+        # [...]
+        self.perform_action(final_action)
+        return final_action
         
     def update_wellbeing(self):
         self.degree = 0
@@ -47,14 +52,19 @@ class Agent:
     
     def get_state(self):
         self.update_wellbeing()
-        self.update_characterstics()
-        state = [self.characteristics, self.total_weight, self.degree, self.well_being]
+        # self.update_characterstics()
+        self.state = state = np.array([self.characteristics, self.total_weight, self.degree, self.well_being])
         return state
     
     def update_policy(self, reward, next_state):
         self.policy_net.update(self.get_state(), self.decide_action(), reward, next_state)
         
-    def perform_action(self, actions):
+    def perform_action(self, action):
+        # performing the action 
+        if action == 0: 
+            pass
+        elif action == 1 :
+            pass 
         pass
     
     def reward(self):

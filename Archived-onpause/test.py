@@ -40,3 +40,8 @@
 # import random 
 # import numpy as np
 # print(random.uniform(0,1))
+import numpy as np
+a = np.array([1,2, 3, 4])
+
+print(a.shape)
+print(np.where(a == 3)[0][0])
