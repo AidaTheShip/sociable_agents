@@ -31,7 +31,21 @@ class PolicyNetwork():
         # state = np.array(state)[np.newaxis, :]  # Expand dimensions to fit model input
         actions = self.model.predict(state)
         print(actions.shape)
-        return actions # just returning the Probability distribution
+        return actions.flatten() # just returning the Probability distribution
     
     def update(self, state, action, reward, next_state):
-        pass
+        with tf.GradientTape() as tape:
+        # Forward pass: compute the probabilities
+            state = tf.convert_to_tensor(state, dtype=tf.float32)
+            probs = self.model(state, training=True)  # Get action probabilities
+
+            # Get the log probabilities of the selected action
+            action_probs = tf.gather_nd(probs, indices=[[i, action[i]] for i in range(len(action))])
+            log_probs = tf.math.log(action_probs)
+
+            # Compute loss as negative log probability times the reward
+            loss = -tf.reduce_mean(log_probs * reward)
+
+        # Compute gradients and update model weights
+        gradients = tape.gradient(loss, self.model.trainable_variables)
+        self.optimizer.apply_gradients(zip(gradients, self.model.trainable_variables))
