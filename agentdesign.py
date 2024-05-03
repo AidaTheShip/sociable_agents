@@ -3,14 +3,14 @@ import random
 import numpy as np
 import pandas as pd 
 from openai import OpenAI
-from Networks.network import SocialNetwork
-from Environments.policy import PolicyNetwork
+# from network import SocialNetwork
+from policy import PolicyNetwork # this takes forever
 from api_keys import open_ai_key
 os.environ['OPENAI_API_KEY'] = open_ai_key
 
 client = OpenAI() # Creating an instance that we will later use
 
-global columns 
+# global columns 
 columns = ['Name', 'Characteristics'] # What we want to store in csv file.
 db_directory = 'AgentDB'
 
@@ -18,17 +18,19 @@ if not os.path.exists(db_directory): # this is for making a new data base direct
     os.makedirs(db_directory)
 
 class Agent:
-    def __init__(self, name, environment:SocialNetwork, directory=db_directory):
+    def __init__(self, name, environment, db_dictionary=db_directory):
         self.name = name
-        self.social_network = environment
-        self.initial_state = self.get_state()
+        self.social_network = environment # this is the overall social network, the agent is going to participate in.
+        # self.initial_state = self.get_state()
+        self.state_dim = 4
+        self.initial_state = np.zeros((self.state_dim))
         self.action_dim = 2
-        self.policy_net = PolicyNetwork(self.initla_state.shape, self.action_dim)
+        # self.policy_net = PolicyNetwork(self.initla_state.shape, self.action_dim)
         # Setting up some characteristics for the agents
     
     def get_state(self): 
         self.update_wellbeing()
-        self.state = np.array([self.characteristics, self.well_being]) # check whether I have to update this a bit more.
+        self.state = np.array([self.characteristics, self.well_being, self.degree, self.total_weight]) # check whether I have to update this a bit more.
         return self.state
     
     def decide_action(self):
@@ -62,4 +64,6 @@ class Agent:
     def create_characteristics(self):
         self.introversion = random.uniform(0,1)
         self.characteristics = self.introversion # for now this is just introversion
-    
+
+
+A = Agent("Nino", None)

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from openai import OpenAI
 # from autogen import ConversableAgent
-from Networks.network import SocialNetwork
+from network import SocialNetwork
 from api_keys import open_ai_key
 os.environ['OPENAI_API_KEY'] = open_ai_key
 

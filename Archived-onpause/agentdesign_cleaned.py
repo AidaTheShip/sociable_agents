@@ -3,8 +3,8 @@ import random
 import numpy as np
 import pandas as pd 
 from openai import OpenAI
-from Networks.network import SocialNetwork
-from Environments.policy import PolicyNetwork
+from network import SocialNetwork
+from policy import PolicyNetwork
 from api_keys import open_ai_key
 os.environ['OPENAI_API_KEY'] = open_ai_key
 
@@ -17,7 +17,7 @@ db_directory = 'AgentDB'
 if not os.path.exists(db_directory): # this is for making a new data base directory
     os.makedirs(db_directory)
 
-class Agent:
+class Agent_Old:
     def __init__(self, name:str, agents, directory=db_directory):
         self.name = name
         # self.participants = agents  # not sure if i necessarily need this
@@ -73,7 +73,9 @@ class Agent:
         
         old_state = self.state
         next_state = self.get_state()
+        # YOU STILL HAVE TO DEFINE WHERE THE REWARD COMES IN. 
         self.policy_net.update(old_state, self.action, self.reward, next_state)
+        return next_state, self.reward
     
     def reward(self):
         return self.update_wellbeing()
