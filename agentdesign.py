@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd 
 from openai import OpenAI
 # from network import SocialNetwork
-from policy import PolicyNetwork # this takes forever
+# from policy import PolicyNetwork # this takes forever
 from api_keys import open_ai_key
 os.environ['OPENAI_API_KEY'] = open_ai_key
 

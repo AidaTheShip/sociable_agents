@@ -23,18 +23,68 @@ def setup(num_agents, agents={}):
     # Create general social network based on the agents
     network = SocialNetwork(names) # this is instantiating a network with all the agents that will be in the simulation but with no connection initially.
     # Create each agent with the knowledge of the social network
-    # for name in names:
-    #     agents[name] = Agent(name, network)
+    for name in names:
+        agents[name] = Agent(name, network)
         
     
     return agents, network
 
-a = Agent("H", None)
+participants, network = setup(3)
 
-# participants, network = setup(3)
-# # print(participants)
-# print(participants, network)
-# print(network.network.edges)
+# ------------- REINFORCEMENT LEARNING ---------------
+num_episodes = 1000
+max_steps_per_episode = 100
+timestep = 1 # at every time step each agent can make a decision in the environment
 
-# test = SocialNetwork(['a', 'b', 'c'])
-# print(test.network.edges)
+class Environment():
+    def __init__(self, agents, social_network):
+        self.agents = agents
+        self.social_network = social_network
+    
+    def training_agents(num_episodes, max_steps_per_episode):
+        for episode in range(num_episodes):
+            state = None # you are resetting the state to the beginning
+            
+
+# def training_agents(num_episodes, max_steps_per_episode):
+#     for episode in range(num_episodes):
+#         state = None # RESETTING THE ENVIRONMENT. THINK ABOUT WHAT THIS MEANS. ENV.RESET() => WHAT???
+#         for step in range(max_steps_per_episode):
+            
+            
+# for episode in range(num_episodes):
+#     state = env.reset()
+#     for step in range(max_steps_per_episode):
+#         actions = [agent.select_action(state[agent_id]) for agent_id, agent in enumerate(agents)]
+#         next_state, rewards, done, info = env.step(actions)
+
+#         # Example update step for REINFORCE (Policy Gradient)
+#         for agent_id, agent in enumerate(agents):
+#             agent.update_policy(rewards[agent_id], optimizers[agent_id])
+
+#         state = next_state
+#         if done:
+#             break
+
+#     # Optionally log progress here
+
+# # Testing loop
+# for episode in range(100):  # 100 testing episodes
+#     state = env.reset()
+#     for step in range(max_steps_per_episode):
+#         actions = [agent.select_action(state[agent_id], explore=False) for agent_id, agent in enumerate(agents)]
+#         next_state, rewards, done, info = env.step(actions)
+#         state = next_state
+#         if done:
+#             break
+
+
+
+
+# # ------------- [ARCHIVE] TESTING IMPORTS -------------
+# # # print(participants)
+# # print(participants, network)
+# # print(network.network.edges)
+
+# # test = SocialNetwork(['a', 'b', 'c'])
+# # print(test.network.edges)
