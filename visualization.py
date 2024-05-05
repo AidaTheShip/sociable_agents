@@ -69,7 +69,7 @@ def draw(window, background, bg_image, player):
 
 def main(window):
     clock = pygame.time.Clock()
-    background, bg_image = get_background("Tile3.png")
+    background, bg_image = get_background("Tile1.png")
     num_players = 5
     player = Player(50, 50, 100, 120, "Character1")
 

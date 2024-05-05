@@ -3,7 +3,12 @@ from network import SocialNetwork
 import numpy as np
 import random
 from agentdesign import Agent
+import os
 
+
+
+
+# ---------------- HELPER FUNCTIONS FOR SETUP ------------------
 def setup(num_agents, agents={}):
     try:
         with open('Agent_Information/information.txt', 'r') as f:
@@ -25,8 +30,6 @@ def setup(num_agents, agents={}):
     # Create each agent with the knowledge of the social network
     for name in names:
         agents[name] = Agent(name, network)
-        
-    
     return agents, network
 
 participants, network = setup(3)
@@ -36,14 +39,30 @@ num_episodes = 1000
 max_steps_per_episode = 100
 timestep = 1 # at every time step each agent can make a decision in the environment
 
+# Storing the development of our data.
+columns = ['Name', 'Characteristics'] # What we want to store in csv file.
+db_directory = 'AgentDB'
+
+if not os.path.exists(db_directory): # this is for making a new data base directory
+    os.makedirs(db_directory)
+
 class Environment():
     def __init__(self, agents, social_network):
         self.agents = agents
         self.social_network = social_network
+        
+    def step(self, agent, action):
+        agent.perform_action(action)
+        # update policy network, etc. on here, too.
+        
     
     def training_agents(num_episodes, max_steps_per_episode):
         for episode in range(num_episodes):
-            state = None # you are resetting the state to the beginning
+            state = None # you are resetting the state to the beginning # or some other function that resets the environment
+            
+            # Loop within the episode
+            done = False
+
             
 
 # def training_agents(num_episodes, max_steps_per_episode):

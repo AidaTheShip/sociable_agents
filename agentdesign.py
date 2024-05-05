@@ -10,15 +10,8 @@ os.environ['OPENAI_API_KEY'] = open_ai_key
 
 client = OpenAI() # Creating an instance that we will later use
 
-# global columns 
-columns = ['Name', 'Characteristics'] # What we want to store in csv file.
-db_directory = 'AgentDB'
-
-if not os.path.exists(db_directory): # this is for making a new data base directory
-    os.makedirs(db_directory)
-
 class Agent:
-    def __init__(self, name, environment, db_dictionary=db_directory):
+    def __init__(self, name, environment, first=True):
         self.name = name
         self.social_network = environment # this is the overall social network, the agent is going to participate in.
         # self.initial_state = self.get_state()
@@ -27,6 +20,9 @@ class Agent:
         self.action_dim = 2
         # self.policy_net = PolicyNetwork(self.initla_state.shape, self.action_dim)
         # Setting up some characteristics for the agents
+        if first: 
+            self.characteristics = self.create_characteristics() # creating characteristics of the agent and storing it in here but only if they are initiated for teh first time.
+            
     
     def get_state(self): 
         self.update_wellbeing()
@@ -47,8 +43,18 @@ class Agent:
         # performing the action / picking a random interaction 
         if action == 0: # you are talking
             interaction_partner = random.choice(self.information)
-            quality_conversation = random.uniform(0,1)
+            quality_conversation = random.uniform(0,1) # this will be replaced by an LLM evaluation
             self.social_network.update_connection(interaction_partner, quality_conversation)
+            
+        elif action == 1 : # this is not interacting.
+            pass
+        
+        old_state = self.state
+        next_state = self.get_state()
+        reward = self.well_being # the higher the well-being the higher the reward? 
+        # YOU STILL HAVE TO DEFINE WHERE THE REWARD COMES IN. 
+        self.policy_net.update(old_state, self.action, self.reward, next_state)
+        return old_state, action, next_state, reward
             
     def update_wellbeing(self):
         self.degree = 0
@@ -65,5 +71,4 @@ class Agent:
         self.introversion = random.uniform(0,1)
         self.characteristics = self.introversion # for now this is just introversion
 
-
-A = Agent("Nino", None)
+# A = Agent("Nino", None)

@@ -95,7 +95,7 @@ def agent_creation(agent_number, agents={}):
     # print(content_names)
     names = np.array([random.choice(content_names) for _ in range(agent_number)])
     for name in names:
-        agents[name] = Agent(name, names)
+        agents[name] = Agent_Old(name, names)
         
     return agents # this is returning a dictionary
 
