@@ -6,6 +6,10 @@ from openai import OpenAI
 # from network import SocialNetwork
 # from policy import PolicyNetwork # this takes forever
 from api_keys import open_ai_key
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
 os.environ['OPENAI_API_KEY'] = open_ai_key
 
 client = OpenAI() # Creating an instance that we will later use
@@ -26,6 +30,7 @@ class Agent:
     
     def get_state(self): 
         self.update_wellbeing()
+        # We might have to change the state to something different later on. It might have to depend a bit more on the actual social network
         self.state = np.array([self.characteristics, self.well_being, self.degree, self.total_weight]) # check whether I have to update this a bit more.
         return self.state
     
@@ -40,8 +45,10 @@ class Agent:
         # Storing the actions as training data
     
     def perform_action(self, action):
+        # Actions might have to be a bit more than just updating the network, e.g., the people you interact with, then this is where you have to change it.
         # performing the action / picking a random interaction 
         if action == 0: # you are talking
+            # This has to change. 
             interaction_partner = random.choice(self.information)
             quality_conversation = random.uniform(0,1) # this will be replaced by an LLM evaluation
             self.social_network.update_connection(interaction_partner, quality_conversation)
