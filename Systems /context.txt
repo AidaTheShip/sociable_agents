@@ -1,0 +1,52 @@
+**Simulation Context: Tragedy of the Commons**
+
+**Overview:**
+The "Tragedy of the Commons" refers to a situation where individual users, acting independently according to their own self-interest, deplete or spoil a shared limited resource, even though this is contrary to the best long-term interests of the group. This simulation aims to model the behavior of individuals and the consequences of their actions on the shared resource.
+
+**Initial Setup:**
+- A community of \( N \) individuals.
+- A shared resource (e.g., a common pasture, fishery, water source) with a replenishment rate \( R \) per time unit.
+- Each individual has the choice to use a certain amount \( A_i \) of the resource.
+
+**Parameters:**
+- \( N \): Total number of individuals.
+- \( C \): Carrying capacity of the resource.
+- \( R \): Replenishment rate of the resource per time unit.
+- \( A_i \): Amount of resource used by individual \( i \) per time unit.
+- \( U \): Utility gained by an individual from using the resource.
+
+**Rules:**
+1. **Resource Usage:**
+   - Each individual \( i \) decides the amount \( A_i \) of the resource to use in each time step.
+   - The total resource usage \( T \) is the sum of all \( A_i \) values.
+   
+2. **Resource Depletion and Replenishment:**
+   - The resource level \( L \) decreases by \( T \) at each time step.
+   - The resource level \( L \) increases by \( R \) at each time step.
+   - The resource level \( L \) cannot exceed the carrying capacity \( C \).
+
+3. **Utility Calculation:**
+   - Each individual gains utility \( U_i \) proportional to their usage \( A_i \).
+   - The total utility for each individual is impacted by the availability of the resource.
+
+4. **Sustainability Check:**
+   - If \( T > R \), the resource level \( L \) will eventually deplete.
+   - If \( L \) reaches zero, the resource is exhausted, and no individual can gain utility from it.
+
+**Simulation Objectives:**
+- To observe how individuals' choices impact the resource over time.
+- To identify thresholds where the resource becomes unsustainable.
+- To understand the collective impact of individual actions on shared resources.
+- To evaluate potential solutions or regulations to prevent resource depletion.
+
+**Simulation Scenarios:**
+- **Scenario 1: Unregulated Usage:** Individuals use the resource based solely on personal gain.
+- **Scenario 2: Cooperative Strategy:** Individuals coordinate to use the resource sustainably.
+- **Scenario 3: Regulated Usage:** External regulations limit individual usage to ensure sustainability.
+
+**Expected Outcomes:**
+- In Scenario 1, the resource is likely to be depleted quickly due to overuse.
+- In Scenario 2, the resource may be maintained at a sustainable level if cooperation is effective.
+- In Scenario 3, the resource is likely to be preserved due to enforced usage limits, but individuals' utilities might be lower compared to unregulated usage.
+
+This simulation will help in understanding the dynamics of shared resource usage and the importance of cooperation or regulation to prevent the Tragedy of the Commons.
