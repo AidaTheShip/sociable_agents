@@ -7,11 +7,20 @@ class Agent:
     def __init__(self, id) -> None:
         self.id = id # each of them has an id
         self.wealth = 0 # each of them has their own wealth associated with them.
+        self.consumption_probability = random.uniform(0,1) # This is giving each agent a probability of depleting the resource or not depleting it
     
-    def consume(self, resource_pool): # this is for when the agent consumes resources durign the steps 
-        if resource_pool['resources'] > 0: 
-            resource_pool['resources'] -= 1
-            self.wealth += 1
+    def choice(self, resource_pool): 
+        if random.random() < self.consumption_probability: 
+            if resource_pool['resources'] > 0:
+                resource_pool['resources'] -= 1
+                self.wealth += 1
+                return True
+        return False
+    
+    # def consume(self, resource_pool): # this is for when the agent consumes resources durign the steps 
+    #     if resource_pool['resources'] > 0: 
+    #         resource_pool['resources'] -= 1
+    #         self.wealth += 1
 
 # instantiating an environment class that defines the constraints of the simulation
 class Environment:
@@ -23,7 +32,8 @@ class Environment:
         
     def step(self): # this is for advancing the simulation by a step
         for agent in self.agents:
-            agent.consume(self.resources_pool)
+            # agent.consume(self.resources_pool)
+            agent.choice(self.resources_pool)
     
     def run_simulation(self, steps): # this is running the entire simulation for x numebr of steps
         resource_level = []
