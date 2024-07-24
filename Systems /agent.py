@@ -32,7 +32,7 @@ class Agent:
         # Integrating the choice in here,  # the state of the agent is the state of wealth and the resource_pool even if the agent does not realize / "feel" the resoruce pool
         state = torch.tensor([self.wealth, resource_pool['resources']], dtype=torch.float32) # this is the current state.
         action_probs = self.policy.forward(state) # this is the action probabilities as calculated by the policy
-        print(f"First: {action_probs}")
+        # print(f"First: {action_probs}")
         if torch.isnan(action_probs).any():
             print(f"NaN detected in action probabilities: {action_probs}")
             return ACTIONS["Wait"]  # Default action in case of NaN
@@ -55,8 +55,8 @@ class Agent:
         # ACTIONS["Wait"] is 0
         elif action == ACTIONS['Wait']: # if the agents chooses to wait
             # potentially
-            # resource_pool['resources'] += 1
-            reward = 0
+            resource_pool['resources'] += 1
+            reward -=1
         
         self.wealth += reward
         self.rewards.append(reward)

@@ -50,3 +50,16 @@ class Environment:
         }
         for agent in self.agents:
             agent.reset()
+            
+    def evaluate_policy(self, steps):
+        self.reset()
+        resource_level = []
+        wealth_levels = {agent.id: [] for agent in self.agents}
+        
+        for _ in trange(steps):
+            self.step()
+            resource_level.append(self.resources_pool['resources'])
+            for agent in self.agents:
+                wealth_levels[agent.id].append(agent.wealth)
+        
+        return resource_level, wealth_levels
