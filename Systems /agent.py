@@ -79,4 +79,8 @@ class Agent:
         self.log_probs = []
         self.rewards = []
         return loss
-        
+    
+    def reset(self):
+        self.wealth = 0
+        self.rewards = []
+        self.log_probs = []
