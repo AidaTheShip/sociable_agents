@@ -1,4 +1,4 @@
-# from agentdesign import Agent
+from tragedyofcommons import Agent
 from autogen import GroupChat, GroupChatManager
 import numpy as np
 import os

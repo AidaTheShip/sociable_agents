@@ -1,26 +1,15 @@
 import random 
 from tqdm import trange
 import matplotlib.pyplot as plt 
-
-# Let's define the base class for the agents that are going to be part of the simulation
-class Agent: 
-    def __init__(self, id) -> None:
-        self.id = id # each of them has an id
-        self.wealth = 0 # each of them has their own wealth associated with them.
-        self.consumption_probability = random.uniform(0,1) # This is giving each agent a probability of depleting the resource or not depleting it
-    
-    def choice(self, resource_pool): 
-        if random.random() < self.consumption_probability: 
-            if resource_pool['resources'] > 0:
-                resource_pool['resources'] -= 1
-                self.wealth += 1
-                return True
-        return False
-    
-    # def consume(self, resource_pool): # this is for when the agent consumes resources durign the steps 
-    #     if resource_pool['resources'] > 0: 
-    #         resource_pool['resources'] -= 1
-    #         self.wealth += 1
+import torch.nn as nn 
+import torch 
+import torch.nn.functional as F # contains useful functions, such as convolutions
+from policynetwork import PolicyNetwork
+from agent import Agent
+ACTIONS = {
+    "Wait": 0, # Do not deplete the resource
+    "Take": 1 # Deplete the resource
+}
 
 # instantiating an environment class that defines the constraints of the simulation
 class Environment:
@@ -32,8 +21,9 @@ class Environment:
         
     def step(self): # this is for advancing the simulation by a step
         for agent in self.agents:
-            # agent.consume(self.resources_pool)
             agent.choice(self.resources_pool)
+        # for agent in self.agents:
+        #     agent.update_policy() # Making sure that we update each agent 
     
     def run_simulation(self, steps): # this is running the entire simulation for x numebr of steps
         resource_level = []
@@ -41,6 +31,8 @@ class Environment:
         
         for _ in trange(steps):
             self.step()
+            for agent in self.agents:
+                agent.update_policy()
             resource_level.append(self.resources_pool['resources'])
             for agent in self.agents:
                 wealth_levels[agent.id].append(agent.wealth)
